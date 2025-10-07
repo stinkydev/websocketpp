@@ -358,13 +358,13 @@ void md5_append(md5_state_t *pms, md5_byte_t const * data, size_t nbytes) {
     md5_byte_t const * p = data;
     size_t left = nbytes;
     int offset = (pms->count[0] >> 3) & 63;
-    md5_word_t nbits = (md5_word_t)(nbytes << 3);
+    md5_word_t nbits = static_cast<md5_word_t>(nbytes << 3);
 
     if (nbytes <= 0)
     return;
 
     /* Update the message length. */
-    pms->count[1] += nbytes >> 29;
+    pms->count[1] += static_cast<md5_word_t>(nbytes >> 29);
     pms->count[0] += nbits;
     if (pms->count[0] < nbits)
     pms->count[1]++;
